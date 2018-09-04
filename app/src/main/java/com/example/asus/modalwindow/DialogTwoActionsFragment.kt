@@ -1,94 +1,82 @@
 package com.example.asus.modalwindow
 
-import android.annotation.SuppressLint
-import android.app.DialogFragment
-import android.app.Fragment
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import java.util.zip.Inflater
+import android.widget.TextView
+import android.app.DialogFragment
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+
 
 public class DialogTwoActionsFragment : DialogFragment() {
-
-    lateinit var listener: ActionListner
     var withArt = false
-    lateinit var inf: View
 
     companion object {
-        @JvmStatic
-
-        fun newInstance(withArt: Boolean) = DialogTwoActionsFragment().apply {
+        fun newInstance(ivDrawable: Int, tv1Text: Int, tv2Text: Int, positiveButtonText: Int, negativeButtonText: Int) = DialogTwoActionsFragment().apply {
             arguments = Bundle().apply {
-                putBoolean("withArt", withArt)
+                putInt("ivDrawable", ivDrawable)
+                putInt("tv1Text", tv1Text)
+                putInt("tv2Text", tv2Text)
+                putInt("positiveButtonText", positiveButtonText)
+                putInt("negativeButtonText", negativeButtonText)
+
+                withArt = true
+            }
+        }
+
+        fun newInstance(tv1Text: Int, tv2Text: Int, positiveButtonText: Int, negativeButtonText: Int) = DialogTwoActionsFragment().apply {
+            arguments = Bundle().apply {
+                putInt("tv1Text", tv1Text)
+                putInt("tv2Text", tv2Text)
+                putInt("positiveButtonText", positiveButtonText)
+                putInt("negativeButtonText", negativeButtonText)
+
+                withArt = false
             }
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            withArt = it.getBoolean("withArt")
-        }
-    }
+    fun positiveAction() {}
+    fun negativeAction() {}
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        if (activity is ActionListner) {
-            listener = activity as ActionListner
+        val inflater = inflater?.inflate(R.layout.dialog_art_two_action_fragment, container, false)
+
+        val iv = inflater?.findViewById(R.id.iv) as ImageView
+        val tv1 = inflater?.findViewById(R.id.tv1) as TextView
+        val tv2 = inflater?.findViewById(R.id.tv2) as TextView
+        val cancel = inflater?.findViewById(R.id.cancel) as Button
+        val submit = inflater?.findViewById(R.id.submit) as Button
+
+        if (!withArt)
+            iv.setVisibility(View.GONE)
+        else
+            arguments?.let {
+                iv.setImageResource(it.getInt("ivDrawable"))
+            }
+
+        arguments?.let {
+            tv1.setText(it.getInt("tv1Text"))
+            tv2.setText(it.getInt("tv2Text"))
+            cancel.setText(it.getInt("positiveButtonText"))
+            submit.setText(it.getInt("negativeButtonText"))
+
         }
 
-        if (!withArt) {
-            inf = inflater?.inflate(R.layout.dialog_two_action_fragment, container, false)!!
-
-            val cancel = inf!!.findViewById(R.id.cancel) as Button
-            cancel.setOnClickListener {
-                listener.doNegativeClick(ModalWindowType.TWO_ACTION);
-                dismiss()
-
-            }
-            val submit = inf!!.findViewById(R.id.submit) as Button
-            submit.setOnClickListener {
-                listener.doPositiveClick(ModalWindowType.TWO_ACTION);
-                dismiss()
-            }
-
-        } else {
-            inf = inflater?.inflate(R.layout.dialog_art_two_action_fragment, container, false)!!
-
-            val cancel = inf!!.findViewById(R.id.cancel) as Button
-            cancel.setOnClickListener {
-                listener.doNegativeClick(ModalWindowType.ART_TWO_ACTION);
-                dismiss()
-
-            }
-            val submit = inf!!.findViewById(R.id.submit) as Button
-            submit.setOnClickListener {
-                listener.doPositiveClick(ModalWindowType.ART_TWO_ACTION);
-                dismiss()
-            }
+        cancel.setOnClickListener {
+            negativeAction()
+            dismiss()
         }
-        return inf
+        submit.setOnClickListener {
+            positiveAction()
+            dismiss()
+        }
+        return inflater
     }
+
 }
-
-/*
-    override fun onAttachFragment(childFragment: Fragment?) {
-        super.onAttachFragment(childFragment)
-
-        Log.i("eeeeeee", "in attach")
-        if (activity is ActionListner) {
-            listener = activity as ActionListner
-        } else {
-            Log.i("eeeeeee", "error")
-            // Throw an error!
-        }
-    }
-        */
-
-

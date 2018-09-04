@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/wallet"
+            android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -31,23 +31,23 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/emirate_tv"
+            android:id="@+id/tv2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="Please enter your Emirates ID to access your wallet account "
-            app:layout_constraintTop_toBottomOf="@+id/wallet" />
+            app:layout_constraintTop_toBottomOf="@+id/tv1" />
 
 
         <EditText
-            android:id="@+id/emirates_id"
+            android:id="@+id/et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:gravity="center"
             android:hint="Emirates ID"
-            app:layout_constraintTop_toBottomOf="@+id/emirate_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/tv2" />
 
         <Button
             android:id="@+id/cancel"
@@ -59,9 +59,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="cancel"
-            app:layout_constraintEnd_toStartOf="@+id/wallet"
+            app:layout_constraintEnd_toStartOf="@+id/tv1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emirates_id" />
+            app:layout_constraintTop_toBottomOf="@+id/et" />
 
         <Button
             android:id="@+id/submit"
@@ -74,8 +74,8 @@
             android:layout_marginTop="8dp"
             android:text="ok"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/wallet"
-            app:layout_constraintTop_toBottomOf="@+id/emirates_id" />
+            app:layout_constraintStart_toEndOf="@+id/tv1"
+            app:layout_constraintTop_toBottomOf="@+id/et" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

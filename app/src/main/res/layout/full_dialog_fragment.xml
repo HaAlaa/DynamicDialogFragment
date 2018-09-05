@@ -1,15 +1,15 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="336dp"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    android:minHeight="151dp"
-    app:cardCornerRadius="12dp">
+    android:minHeight="151dp">
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/edit_name"
+        android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -26,12 +26,14 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:src="@drawable/wallet"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tv1"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
@@ -39,12 +41,13 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:text="ADNOC Wallet "
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv" />
 
         <TextView
-            android:id="@+id/tv2"
+            android:id="@+id/subtitle"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginEnd="8dp"
@@ -52,31 +55,45 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
+
             android:text="You have to be loged in to the ADNC Wallet to use this feature "
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv1" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:hint="Emirates ID"
+
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/subtitle" />
 
         <Button
-            android:id="@+id/cancel"
+            android:id="@+id/first_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="cancel"
-            app:layout_constraintEnd_toStartOf="@+id/iv"
-            app:layout_constraintTop_toBottomOf="@+id/tv2">
-
-        </Button>
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/input" />
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/second_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="login"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv"
-            app:layout_constraintTop_toBottomOf="@+id/tv2"></Button>
+            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/input" />
+
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

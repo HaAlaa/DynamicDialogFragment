@@ -7,13 +7,13 @@ import android.widget.ImageView
 import android.widget.TextView
 
 class DialogObject {
-    private  var iv: ImageView
-    private  var title: TextView
-    private  var subtitle: TextView
-    private  var input: EditText
-    private  var firstButton: Button
-    private  var secondButton: Button
-    private  var parentLayout: ConstraintLayout
+    private var iv: ImageView
+    private var title: TextView
+    private var subtitle: TextView
+    private var input: EditText
+    private var firstButton: Button
+    private var secondButton: Button
+    private var parentLayout: ConstraintLayout
 
     constructor(iv: ImageView, title: TextView, subtitle: TextView, input: EditText, firstButton: Button, secondButton: Button, parentLayout: ConstraintLayout) {
         this.iv = iv
@@ -24,7 +24,6 @@ class DialogObject {
         this.secondButton = secondButton
         this.parentLayout = parentLayout
     }
-
 
     public fun getImg(): ImageView {
         return iv

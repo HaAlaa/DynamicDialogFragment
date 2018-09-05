@@ -12,10 +12,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.support.constraint.ConstraintSet
 
-
 public class FullDialogFragment : DialogFragment() {
 
     lateinit var obj: DialogObject
+    lateinit var listener: DialogListener
 
 
     companion object {
@@ -64,9 +64,6 @@ public class FullDialogFragment : DialogFragment() {
     }
 
 
-    fun positiveAction() {}
-    fun negativeAction() {}
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val inflater = inflater?.inflate(R.layout.full_dialog_fragment, container, false)
@@ -80,6 +77,8 @@ public class FullDialogFragment : DialogFragment() {
         val firstButton = inflater?.findViewById(R.id.first_button) as Button
         val secondButton = inflater?.findViewById(R.id.second_button) as Button
         obj = DialogObject(iv, title, subtitle, input, firstButton, secondButton, parent)
+
+
 
         arguments?.let {
             if (it.getInt("title") != 0)
@@ -107,16 +106,30 @@ public class FullDialogFragment : DialogFragment() {
 
 
 
-            if (it.getInt("firstButton") != 0)
+            if (it.getInt("firstButton") != 0) {
                 addFirstButton(it.getInt("firstButton"))
-            else
+                obj.getFirstButton().setOnClickListener() {
+                    if (activity is DialogListener) {
+                        listener = activity as DialogListener
+                        listener.myListener(obj);
+                    }
+                    dismiss()
+                }
+            } else
                 obj.getFirstButton().setVisibility(View.GONE)
 
 
 
-            if (it.getInt("secondButton") != 0)
+            if (it.getInt("secondButton") != 0) {
                 addSecondButton(it.getInt("secondButton"))
-            else {
+                obj.getSecondButton().setOnClickListener() {
+                    if (activity is DialogListener) {
+                        listener = activity as DialogListener
+                        listener.myListener(obj);
+                    }
+                    dismiss()
+                }
+            } else {
                 obj.getSecondButton().setVisibility(View.GONE)
 
                 //set the button to the center of the layout
@@ -125,7 +138,10 @@ public class FullDialogFragment : DialogFragment() {
                 constraintSet.connect(obj.getFirstButton().getId(), ConstraintSet.START, obj.getParentLayout().getId(), ConstraintSet.START, 0)
                 constraintSet.connect(obj.getFirstButton().getId(), ConstraintSet.END, obj.getParentLayout().getId(), ConstraintSet.END, 0)
                 constraintSet.applyTo(obj.getParentLayout())
+
             }
+
+
         }
 
         return inflater

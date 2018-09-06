@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
             override fun click() {
             }
         }
-        val popup=Popup.PopupBuilder()
-                .addTitle("Welcome")
+        val popup=Popup.PopupBuilder(applicationContext)
+                .addTitle("Hello")
                 .addSubtitle("you need to login")
                 .addFirstButton("ok")
                 .build()

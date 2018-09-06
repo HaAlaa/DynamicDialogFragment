@@ -22,9 +22,8 @@ class Popup private constructor(builder: PopupBuilder) {
     }
 
     companion object
-    class PopupBuilder() {
-        lateinit var context: Context
-
+    class PopupBuilder(myContext: Context) {
+        var context: Context = myContext
         var title: String = ""
         var subtitle: String = ""
         var image: Int = 0
@@ -32,14 +31,13 @@ class Popup private constructor(builder: PopupBuilder) {
         var firstButton: String = ""
         var secondButton: String = ""
 
-
         fun addTitle(title: String): PopupBuilder {
             this.title = title
             return this
         }
 
         fun addTitle(title: Int): PopupBuilder {
-            this.title = context.resources.getString(title)
+            this.title =context. resources . getString (title)
             return this
         }
 

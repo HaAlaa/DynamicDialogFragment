@@ -4,7 +4,8 @@
     android:layout_width="336dp"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    android:minHeight="151dp">
+    android:minHeight="151dp"
+   >
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,7 +27,6 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:src="@drawable/wallet"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,7 +41,6 @@
             android:layout_marginStart="8dp"
             android:gravity="center"
             android:text="ADNOC Wallet "
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv" />
@@ -57,7 +56,6 @@
             android:gravity="center"
 
             android:text="You have to be loged in to the ADNC Wallet to use this feature "
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title" />
@@ -68,7 +66,6 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:hint="Emirates ID"
-            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/subtitle" />
 
         <Button
@@ -78,7 +75,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="cancel"
-            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/input" />
 
@@ -87,7 +83,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="login"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/title"
             app:layout_constraintTop_toBottomOf="@+id/input" />

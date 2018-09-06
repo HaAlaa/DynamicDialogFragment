@@ -3,7 +3,7 @@ package com.example.asus.modalwindow
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
-class MainActivity : AppCompatActivity(), DialogListener {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,14 +14,14 @@ class MainActivity : AppCompatActivity(), DialogListener {
         helper.addSubtitle(R.string.tv2)
         helper.addFirstButton(R.string.button1)
         helper.addSecondButton(R.string.button2)
-        helper.showDialog(fragmentManager)
-    }
 
-    override fun myListener(dialogObject: DialogObject) {
-        dialogObject.getFirstButton().setOnClickListener() {
-        }
+        val actionDialogListener = object : FullDialogFragment.OnClickListener {
+            override fun click() {
 
-        dialogObject.getSecondButton().setOnClickListener() {
+            }
         }
+        val builder = helper.builder()
+        builder.setmListener(actionDialogListener)
+        builder.show(fragmentManager, "dialog")
     }
 }

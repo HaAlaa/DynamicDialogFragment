@@ -1,52 +1,38 @@
 package com.example.asus.modalwindow
 
-import android.content.Context
-import android.util.SparseArray
-
 class Popup private constructor(builder: PopupBuilder) {
 
-    val title: String
-    val subtitle: String
+    val title: Int
+    val subtitle: Int
     val image: Int
-    val input: String
-    val firstButton: String
-    val secondButton: String
+    val input: Int
+    val positiveButton: Int
+    val negativeButton: Int
 
     init {
         this.title = builder.title
         this.subtitle = builder.subtitle
         this.input = builder.input
         this.image = builder.image
-        this.firstButton = builder.firstButton
-        this.secondButton = builder.secondButton
+        this.positiveButton = builder.positiveButton
+        this.negativeButton = builder.negativeButton
     }
 
     companion object
-    class PopupBuilder(myContext: Context) {
-        var context: Context = myContext
-        var title: String = ""
-        var subtitle: String = ""
+    class PopupBuilder() {
+        var title: Int = 0
+        var subtitle: Int = 0
         var image: Int = 0
-        var input: String = ""
-        var firstButton: String = ""
-        var secondButton: String = ""
+        var input: Int = 0
+        var positiveButton: Int = 0
+        var negativeButton: Int = 0
 
-        fun addTitle(title: String): PopupBuilder {
+        fun addTitle(title: Int): PopupBuilder {
             this.title = title
             return this
         }
 
-        fun addTitle(title: Int): PopupBuilder {
-            this.title =context. resources . getString (title)
-            return this
-        }
-
         fun addSubtitle(subtitle: Int): PopupBuilder {
-            this.subtitle = context.resources.getString(subtitle)
-            return this
-        }
-
-        fun addSubtitle(subtitle: String): PopupBuilder {
             this.subtitle = subtitle
             return this
         }
@@ -57,34 +43,19 @@ class Popup private constructor(builder: PopupBuilder) {
             return this
         }
 
-
         fun addInput(input: Int): PopupBuilder {
-            this.input = context.resources.getString(input)
-            return this
-        }
-
-        fun addInput(input: String): PopupBuilder {
             this.input = input
             return this
         }
 
-        fun addFirstButton(text: Int): PopupBuilder {
-            this.firstButton = context.resources.getString(text)
+        fun addPositiveButton(text: Int): PopupBuilder {
+            this.positiveButton = text
             return this
         }
 
-        fun addFirstButton(text: String): PopupBuilder {
-            this.firstButton = text
-            return this
-        }
 
-        fun addSecondButton(text: Int): PopupBuilder {
-            this.secondButton = context.resources.getString(text)
-            return this
-        }
-
-        fun addSecondButton(text: String): PopupBuilder {
-            this.secondButton = text
+        fun addNegativeButton(text: Int): PopupBuilder {
+            this.negativeButton = text
             return this
         }
 

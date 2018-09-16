@@ -16,12 +16,12 @@ class FullDialogFragment : DialogFragment() {
     companion object {
         fun newInstance(popup: Popup) = FullDialogFragment().apply {
             arguments = Bundle().apply {
-                putString(Constants.TITLE, popup.title)
-                putString(Constants.SUBTITLE, popup.subtitle)
+                putInt(Constants.TITLE, popup.title)
+                putInt(Constants.SUBTITLE, popup.subtitle)
                 putInt(Constants.IMAGE, popup.image)
-                putString(Constants.INPUT, popup.input)
-                putString(Constants.FIRST_BUTTON, popup.firstButton)
-                putString(Constants.SECOND_BUTTON, popup.secondButton)
+                putInt(Constants.INPUT, popup.input)
+                putInt(Constants.NEGATIVE_BUTTON, popup.negativeButton)
+                putInt(Constants.POSITIVE_BUTTON, popup.positiveButton)
             }
         }
     }
@@ -33,91 +33,71 @@ class FullDialogFragment : DialogFragment() {
     }
 
 
-    fun addTitle(text: String) {
-        title.text = text
-        title.setVisibility(View.VISIBLE)
+    private fun addTitle(text: Int) {
+        title.setText(text)
+        title.visibility = View.VISIBLE
     }
 
 
-    fun addSubtitle(text: String) {
+    private fun addSubtitle(text: Int) {
         subtitle.setText(text)
-        subtitle.setVisibility(View.VISIBLE)
+        subtitle.visibility = View.VISIBLE
     }
 
-
-    fun addImage(src: Int) {
+    private fun addImage(src: Int) {
         iv.setImageResource(src)
-        iv.setVisibility(View.VISIBLE)
+        iv.visibility = View.VISIBLE
     }
 
 
-    fun addInput(text: String) {
-        input.hint = text
-        input.setVisibility(View.VISIBLE)
+    private fun addInput(text: Int) {
+        input.setHint(text)
+        input.visibility = View.VISIBLE
     }
 
-
-    fun addFirstButton(text: String) {
-        first_button.setText(text)
-        first_button.setVisibility(View.VISIBLE)
+    private fun addNegativeButton(text: Int) {
+        negative_button.setText(text)
+        negative_button.visibility = View.VISIBLE
     }
 
-
-    fun addSecondButton(text: String) {
-        second_button.setText(text)
-        second_button.setVisibility(View.VISIBLE)
+    private fun addPositiveButton(text: Int) {
+        positive_button.setText(text)
+        positive_button.visibility = View.VISIBLE
+        arrow.visibility = View.VISIBLE
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        arguments?.let {
+        arguments?.let { it ->
 
-            if (it.getString(Constants.TITLE) == "")
-                title.setVisibility(View.GONE)
-            else {
-                addTitle(it.getString(Constants.TITLE))
-            }
+            if (it.getInt(Constants.TITLE) != 0)
+                addTitle(it.getInt(Constants.TITLE))
 
-            if (it.getString(Constants.SUBTITLE) == "")
-                subtitle.setVisibility(View.GONE)
-            else {
-                addSubtitle(it.getString(Constants.SUBTITLE))
-            }
+            if (it.getInt(Constants.SUBTITLE) != 0)
+                addSubtitle(it.getInt(Constants.SUBTITLE))
 
-            if (it.getString(Constants.INPUT) == "") {
+            if (it.getInt(Constants.INPUT) != 0)
+                addInput(it.getInt(Constants.INPUT))
 
-                input.setVisibility(View.GONE)
-            } else {
-                addInput(it.getString(Constants.INPUT))
-            }
-
-
-            if (it.getInt(Constants.IMAGE) == 0)
-                iv.setVisibility(View.GONE)
-            else {
+            if (it.getInt(Constants.IMAGE) != 0)
                 addImage(it.getInt(Constants.IMAGE))
-            }
 
-            if (it.getString(Constants.FIRST_BUTTON) == "")
-                first_button.setVisibility(View.GONE)
-            else {
-                addFirstButton(it.getString(Constants.FIRST_BUTTON))
-                first_button.setOnClickListener() {
+            if (it.getInt(Constants.POSITIVE_BUTTON) != 0) {
+                addPositiveButton(it.getInt(Constants.POSITIVE_BUTTON))
+                positive_button.setOnClickListener() {
                     if (mListener != null) {
-                        mListener?.click()
+                        mListener?.positiveClickListener()
                         dismiss()
                     }
                 }
             }
 
-            if (it.getString(Constants.SECOND_BUTTON) == "") {
-                second_button.setVisibility(View.GONE)
+            if (it.getInt(Constants.NEGATIVE_BUTTON) == 0) {
                 centralizeButton()
             } else {
-                addSecondButton(it.getString(Constants.SECOND_BUTTON))
-                second_button.setOnClickListener() {
+                addNegativeButton(it.getInt(Constants.NEGATIVE_BUTTON))
+                negative_button.setOnClickListener() {
                     if (mListener != null) {
-                        mListener?.click()
+                        mListener?.negativeClickListener()
                         dismiss()
                     }
                 }
@@ -125,22 +105,24 @@ class FullDialogFragment : DialogFragment() {
         }
     }
 
-    fun centralizeButton() {
+    private fun centralizeButton() {
         val constraintSet = ConstraintSet()
         constraintSet.clone(parent)
-        constraintSet.connect(first_button.id, ConstraintSet.START, parent.id, ConstraintSet.START, 0)
-        constraintSet.connect(first_button.id, ConstraintSet.END, parent.id, ConstraintSet.END, 0)
+        constraintSet.connect(positive_button.id, ConstraintSet.START, parent.id, ConstraintSet.START, 0)
+        constraintSet.connect(positive_button.id, ConstraintSet.END, parent.id, ConstraintSet.END, 0)
+        constraintSet.connect(positive_button.id, ConstraintSet.TOP, input.id, ConstraintSet.BOTTOM, 0)
         constraintSet.applyTo(parent)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val inflater = inflater?.inflate(R.layout.full_dialog_fragment, container, false)
-
-        return inflater
+        return inflater?.inflate(R.layout.full_dialog_fragment, container, false)
     }
 
     interface OnClickListener {
-        fun click()
+        fun positiveClickListener()
+
+        fun negativeClickListener()
+
     }
 }

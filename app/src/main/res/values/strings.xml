@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Modal Window</string>
-    <string name="title">ADNOC Wallet </string>
-    <string name="subtitle">You have to be logged in to the ADNOC Wallet to use this feature. </string>
+    <string name="tv1">ADNOC Wallet </string>
+    <string name="tv2">You have to be logged in to the ADNOC Wallet to use this feature. </string>
+    <string name="tv3">Please enter your Emirates ID to access your wallet account</string>
     <string name="et_hint">Emirates ID</string>
-    <string name="button1">Ok</string>
-    <string name="button2">Cancel </string>
+    <string name="button1">Cancel</string>
+    <string name="button2">Log in </string>
 </resources>

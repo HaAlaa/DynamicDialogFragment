@@ -3,8 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="blue">#66b2ff</color>
-    <color name="grey">#DCDCDC	</color>
-    <color name="dark_grey">#808080</color>
-    <color name="black">#000000</color>
+
+    <color name="colorPopupDialogButtonPressed">#bababa</color>
+    <color name="colorPopupDialogButtonNormal">#ffffff</color>
+    <color name="colorPopupDialogStyledButtonStroke">#61b4eb</color>
+    <color name="colorPopupDialogMessageTextColor">#9f9f9f</color>
 </resources>

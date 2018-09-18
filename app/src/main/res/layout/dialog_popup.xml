@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialogMessageTV" />
 
-    <Button
+    <LinearLayout
         android:id="@+id/positiveBtn"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
@@ -74,25 +74,39 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/selector_styled_popup_btn"
-        android:drawableEnd="@drawable/ic_fw_arrow"
-        android:drawablePadding="4dp"
-        android:elevation="0dp"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
-        android:paddingEnd="24dp"
+        android:paddingEnd="16dp"
         android:paddingStart="24dp"
-        android:stateListAnimator="@null"
-        android:text="Button"
-        android:textAlignment="center"
-        android:textColor="@color/colorPopupDialogStyledButtonStroke"
-        android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/dialogMessageTV" />
+        app:layout_constraintTop_toBottomOf="@+id/dialogMessageTV">
+
+        <TextView
+            android:id="@+id/positiveBtnText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Button"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPopupDialogStyledButtonStroke"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/ic_fw_arrow" />
+    </LinearLayout>
 
 
-    <Button
+    <LinearLayout
         android:id="@+id/neutralBtn"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
@@ -100,21 +114,38 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/selector_styled_popup_btn"
-        android:drawableEnd="@drawable/ic_fw_arrow"
-        android:drawablePadding="4dp"
-        android:elevation="0dp"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center"
-        android:paddingEnd="24dp"
+        android:paddingEnd="16dp"
         android:paddingStart="24dp"
-        android:stateListAnimator="@null"
-        android:text="Button"
-        android:textAlignment="center"
-        android:textColor="@color/colorPopupDialogStyledButtonStroke"
-        android:textSize="14sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialogMessageTV" />
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/dialogMessageTV">
+
+        <TextView
+            android:id="@+id/neutralBtnText"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Button"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPopupDialogStyledButtonStroke"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/ic_fw_arrow" />
+    </LinearLayout>
+
+
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"

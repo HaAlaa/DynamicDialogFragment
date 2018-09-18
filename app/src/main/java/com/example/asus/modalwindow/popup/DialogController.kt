@@ -9,11 +9,8 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 
 import com.example.asus.modalwindow.R
 
@@ -24,15 +21,17 @@ class DialogController protected constructor(private val mContext: Context, priv
     private var mTitle: CharSequence? = null
     protected var mMessage: CharSequence? = null
 
-    private var mButtonPositive: Button? = null
+    private lateinit var mButtonPositive: LinearLayout
+    private lateinit var mPositiveBtnText: TextView
     private var mButtonPositiveText: CharSequence? = null
     private var mButtonPositiveMessage: Message? = null
 
-    private var mButtonNegative: Button? = null
+    private lateinit var mButtonNegative: Button
     private var mButtonNegativeText: CharSequence? = null
     private var mButtonNegativeMessage: Message? = null
 
-    private var mButtonNeutral: Button? = null
+    private lateinit var mButtonNeutral: LinearLayout
+    private lateinit var mNeutralBtnText: TextView
     private var mButtonNeutralText: CharSequence? = null
     private var mButtonNeutralMessage: Message? = null
 
@@ -40,30 +39,32 @@ class DialogController protected constructor(private val mContext: Context, priv
     private var mIconId = 0
     private var mIcon: Drawable? = null
 
-    private var mIconView: ImageView? = null
-    private var mTitleView: TextView? = null
-    protected var mMessageView: TextView? = null
+    private lateinit var mIconView: ImageView
+    private lateinit var mTitleView: TextView
+    protected lateinit var mMessageView: TextView
 
     private val mHandler: Handler
+
     init {
         mHandler = ButtonHandler(mDialogInterface)
 
         /* We use a custom title so never request a window title */
         mWindow.requestFeature(Window.FEATURE_NO_TITLE)
     }
-    private val mButtonHandler = View.OnClickListener { v ->
-        val m: Message?
-        if (v === mButtonPositive && mButtonPositiveMessage != null) {
-            m = Message.obtain(mButtonPositiveMessage)
-        } else if (v === mButtonNegative && mButtonNegativeMessage != null) {
-            m = Message.obtain(mButtonNegativeMessage)
-        } else if (v === mButtonNeutral && mButtonNeutralMessage != null) {
-            m = Message.obtain(mButtonNeutralMessage)
+
+    private val mButtonHandler = View.OnClickListener { view ->
+        val message: Message?
+        if (view === mButtonPositive && mButtonPositiveMessage != null) {
+            message = Message.obtain(mButtonPositiveMessage)
+        } else if (view === mButtonNegative && mButtonNegativeMessage != null) {
+            message = Message.obtain(mButtonNegativeMessage)
+        } else if (view === mButtonNeutral && mButtonNeutralMessage != null) {
+            message = Message.obtain(mButtonNeutralMessage)
         } else {
-            m = null
+            message = null
         }
 
-        m?.sendToTarget()
+        message?.sendToTarget()
 
         // Post a message so we dismiss after the above handlers are executed
         mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG, mDialogInterface)
@@ -94,8 +95,6 @@ class DialogController protected constructor(private val mContext: Context, priv
     }
 
 
-
-
     fun installContent(params: DialogParams) {
         params.apply(this)
         installContent()
@@ -111,16 +110,12 @@ class DialogController protected constructor(private val mContext: Context, priv
 
     fun setTitle(title: CharSequence?) {
         mTitle = title
-        if (mTitleView != null) {
-            mTitleView!!.text = title
-        }
+//        mTitleView?.text = title
     }
 
     fun setMessage(message: CharSequence?) {
         mMessage = message
-        if (mMessageView != null) {
-            mMessageView!!.text = message
-        }
+//        mMessageView?.text = message
     }
 
     fun setButton(whichButton: Int, text: CharSequence,
@@ -156,14 +151,12 @@ class DialogController protected constructor(private val mContext: Context, priv
         mIcon = null
         mIconId = resId
 
-        if (mIconView != null) {
-            if (resId != 0) {
-                mIconView!!.visibility = View.VISIBLE
-                mIconView!!.setImageResource(mIconId)
-            } else {
-                mIconView!!.visibility = View.GONE
-            }
-        }
+//        if (resId != 0) {
+//            mIconView.visibility = View.VISIBLE
+//            mIconView.setImageResource(mIconId)
+//        } else {
+//            mIconView.visibility = View.GONE
+//        }
     }
 
     /**
@@ -176,101 +169,102 @@ class DialogController protected constructor(private val mContext: Context, priv
         mIcon = icon
         mIconId = 0
 
-        if (mIconView != null) {
-            if (icon != null) {
-                mIconView!!.visibility = View.VISIBLE
-                mIconView!!.setImageDrawable(icon)
-            } else {
-                mIconView!!.visibility = View.GONE
-            }
-        }
+//        if (icon != null) {
+//            mIconView.visibility = View.VISIBLE
+//            mIconView.setImageDrawable(icon)
+//        } else {
+//            mIconView.visibility = View.GONE
+//        }
     }
 
     private fun setupView() {
         val parentPanel = mWindow.findViewById<View>(R.id.dialogParent)
-        setupContent(parentPanel)
-        setupButtons(parentPanel)
-        setupTitle(parentPanel)
-        setupImage(parentPanel)
+        mTitleView = mWindow.findViewById<View>(R.id.dialogTitleTV) as TextView
+        mIconView = mWindow.findViewById<View>(R.id.dialogImageIV) as ImageView
+        mMessageView = mWindow.findViewById<View>(R.id.dialogMessageTV) as TextView
+        mButtonPositive = mWindow.findViewById<View>(R.id.positiveBtn) as LinearLayout
+        mPositiveBtnText = mWindow.findViewById<View>(R.id.positiveBtnText) as TextView
+        mButtonNegative = mWindow.findViewById<View>(R.id.negativeBtn) as Button
+        mButtonNeutral = mWindow.findViewById<View>(R.id.neutralBtn) as LinearLayout
+        mNeutralBtnText = mWindow.findViewById<View>(R.id.neutralBtnText) as TextView
+
+
+        setupContent()
+        setupButtons()
+        setupTitle()
+        setupImage()
     }
 
 
-    protected fun setupTitle(topPanel: View) {
+    protected fun setupTitle() {
 
         val hasTextTitle = !TextUtils.isEmpty(mTitle)
         if (hasTextTitle) {
             // Display the title if a title is supplied, else hide it.
-            mTitleView = mWindow.findViewById<View>(R.id.dialogTitleTV) as TextView
-            mTitleView!!.text = mTitle
+            mTitleView.text = mTitle
         } else {
-            mTitleView!!.visibility = View.GONE
+            mTitleView.visibility = View.GONE
         }
     }
 
-    protected fun setupImage(topPanel: View) {
-        mIconView = mWindow.findViewById<View>(R.id.dialogImageIV) as ImageView
+    protected fun setupImage() {
         // Do this last so that if the user has supplied any icons we
         // use them instead of the default ones. If the user has
         // specified 0 then make it disappear.
         if (mIconId != 0) {
-            mIconView!!.setImageResource(mIconId)
+            mIconView.setImageResource(mIconId)
         } else if (mIcon != null) {
-            mIconView!!.setImageDrawable(mIcon)
+            mIconView.setImageDrawable(mIcon)
         } else {
-            mIconView!!.visibility = View.GONE
+            mIconView.visibility = View.GONE
         }
     }
 
-    protected fun setupContent(contentPanel: View) {
-        // Special case for users that only want to display a String
-        mMessageView = contentPanel.findViewById<View>(R.id.dialogMessageTV) as TextView
-        if (mMessageView == null) {
-            return
-        }
+    protected fun setupContent() {
+
         if (mMessage != null) {
-            mMessageView!!.text = mMessage
+            mMessageView.text = mMessage
         } else {
-            mMessageView!!.visibility = View.GONE
+            mMessageView.visibility = View.GONE
         }
     }
 
 
-    protected fun setupButtons(buttonPanel: View) {
+    protected fun setupButtons() {
         val BIT_BUTTON_POSITIVE = 1
         val BIT_BUTTON_NEGATIVE = 2
         val BIT_BUTTON_NEUTRAL = 4
         var whichButtons = 0
-        mButtonPositive = buttonPanel.findViewById<View>(R.id.positiveBtn) as Button
-        mButtonPositive!!.setOnClickListener(mButtonHandler)
+
+        mButtonPositive.setOnClickListener(mButtonHandler)
 
         if (TextUtils.isEmpty(mButtonPositiveText)) {
-            mButtonPositive!!.visibility = View.GONE
+            mButtonPositive.visibility = View.GONE
         } else {
-            mButtonPositive!!.text = mButtonPositiveText
-            mButtonPositive!!.visibility = View.VISIBLE
+            mPositiveBtnText.text = mButtonPositiveText
+            mButtonPositive.visibility = View.VISIBLE
             whichButtons = whichButtons or BIT_BUTTON_POSITIVE
         }
 
-        mButtonNegative = buttonPanel.findViewById<View>(R.id.negativeBtn) as Button
-        mButtonNegative!!.setOnClickListener(mButtonHandler)
+        mButtonNegative.setOnClickListener(mButtonHandler)
 
         if (TextUtils.isEmpty(mButtonNegativeText)) {
-            mButtonNegative!!.visibility = View.GONE
+            mButtonNegative.visibility = View.GONE
         } else {
-            mButtonNegative!!.text = mButtonNegativeText
-            mButtonNegative!!.visibility = View.VISIBLE
+            mButtonNegative.text = mButtonNegativeText
+            mButtonNegative.visibility = View.VISIBLE
 
             whichButtons = whichButtons or BIT_BUTTON_NEGATIVE
         }
 
-        mButtonNeutral = buttonPanel.findViewById<View>(R.id.neutralBtn) as Button
-        mButtonNeutral!!.setOnClickListener(mButtonHandler)
+
+        mButtonNeutral.setOnClickListener(mButtonHandler)
 
         if (TextUtils.isEmpty(mButtonNeutralText)) {
-            mButtonNeutral!!.visibility = View.GONE
+            mButtonNeutral.visibility = View.GONE
         } else {
-            mButtonNeutral!!.text = mButtonNeutralText
-            mButtonNeutral!!.visibility = View.VISIBLE
+            mNeutralBtnText.text = mButtonNeutralText
+            mButtonNeutral.visibility = View.VISIBLE
 
             whichButtons = whichButtons or BIT_BUTTON_NEUTRAL
         }
@@ -285,7 +279,7 @@ class DialogController protected constructor(private val mContext: Context, priv
     }
 
 
-    fun getButton(whichButton: Int): Button? {
+    fun getButton(whichButton: Int): View? {
         when (whichButton) {
             DialogInterface.BUTTON_POSITIVE -> return mButtonPositive
             DialogInterface.BUTTON_NEGATIVE -> return mButtonNegative
@@ -367,32 +361,8 @@ class DialogController protected constructor(private val mContext: Context, priv
 
     companion object {
 
-
         fun create(context: Context, di: DialogInterface, window: Window): DialogController {
             return DialogController(context, di, window)
-        }
-
-        internal fun canTextInput(v: View): Boolean {
-            var v = v
-            if (v.onCheckIsTextEditor()) {
-                return true
-            }
-
-            if (v !is ViewGroup) {
-                return false
-            }
-
-            val vg = v
-            var i = vg.childCount
-            while (i > 0) {
-                i--
-                v = vg.getChildAt(i)
-                if (canTextInput(v)) {
-                    return true
-                }
-            }
-
-            return false
         }
     }
 }
